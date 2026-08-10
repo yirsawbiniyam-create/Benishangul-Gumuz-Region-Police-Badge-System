@@ -1,0 +1,6 @@
+{
+  "name": "Benishangul Gumuz Region Police Badge System",
+  "description": "የቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን ቴክኖሎጂ ማስፋፊያ ማዕከል የባጅ መስሪያ፣ የፎቶ ማስተካከያ እና የQR ማረጋገጫ ሲስተም",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

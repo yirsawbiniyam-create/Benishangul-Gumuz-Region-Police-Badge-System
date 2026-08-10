@@ -1,0 +1,12 @@
+{
+  "projectId": "bgr-police-badge-system",
+  "appId": "1:824488242706:web:ecfd844ad989607909f2cb",
+  "apiKey": "AIzaSyBjeWK1be5b5WEjqZSXeOcEHlQSCpFQlgg",
+  "authDomain": "bgr-police-badge-system.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "bgr-police-badge-system.firebasestorage.app",
+  "messagingSenderId": "824488242706",
+  "measurementId": "G-Z5R144XXWJ",
+  "oAuthClientId": "",
+  "recaptchaSiteKey": ""
+}
