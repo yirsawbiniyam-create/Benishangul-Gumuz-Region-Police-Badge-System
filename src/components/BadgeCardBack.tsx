@@ -110,7 +110,7 @@ export const BadgeCardBack: React.FC<BadgeCardBackProps> = ({
         </p>
         <p className="text-gray-200 font-semibold">
           • ባጁ ቢጠፋ ወይም ሌላ ሰው ቢያገኘው በአቅራቢያው ለሚገኝ ፖሊስ ጣቢያ እንዲያስረክብ ወይም በስልክ ቁጥር
-          <strong className="text-[#facc15] font-mono ml-0.5 font-black">+251 57 775 0000</strong> ይደውሉ::
+          <strong className="text-[#facc15] font-mono ml-0.5 font-black">9991</strong> ይደውሉ::
         </p>
         <p className="text-[6px] text-amber-300 font-bold uppercase font-mono tracking-tighter pt-0.5 border-t border-amber-400/20">
           PROPERTY OF BENISHANGUL GUMUZ REGION POLICE COMMISSION.

@@ -44,7 +44,7 @@ export const BadgeCardFront: React.FC<BadgeCardFrontProps> = ({
       <div className="relative pt-2.5 px-2.5 pb-2 bg-gradient-to-r from-[#0b1c3a] via-[#133261] to-[#0b1c3a] border-b-2 border-[#eab308]">
         <div className="flex items-center justify-between gap-1">
           {/* Left: Ethiopian National Flag */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center justify-center">
             <div className="w-10 h-6.5 rounded border border-[#facc15] overflow-hidden shadow-md bg-black">
               <img
                 src={ethiopianFlag}
@@ -52,24 +52,21 @@ export const BadgeCardFront: React.FC<BadgeCardFrontProps> = ({
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-[7px] text-[#facc15] font-black mt-0.5 tracking-tighter">
-              ኢትዮጵያ
-            </span>
           </div>
 
           {/* Center: Official Police Commission Logo */}
           <div className="flex flex-col items-center">
-            <div className="w-13 h-13 p-0.5 rounded-full bg-gradient-to-tr from-[#facc15] via-white to-[#ca8a04] shadow-lg">
+            <div className="w-16 h-16 p-0.5 rounded-full bg-gradient-to-tr from-[#facc15] via-white to-[#eab308] shadow-xl ring-2 ring-[#facc15]/60">
               <img
                 src={logo}
                 alt="Police Commission Logo"
-                className="w-full h-full object-contain rounded-full bg-[#0f2d5e]"
+                className="w-full h-full object-contain rounded-full bg-white filter contrast-[1.08] brightness-[1.05] drop-shadow"
               />
             </div>
           </div>
 
           {/* Right: Benishangul Gumuz Regional Flag */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center justify-center">
             <div className="w-10 h-6.5 rounded border border-[#facc15] overflow-hidden shadow-md bg-black">
               <img
                 src={regionalFlag}
@@ -77,23 +74,20 @@ export const BadgeCardFront: React.FC<BadgeCardFrontProps> = ({
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-[7px] text-[#facc15] font-black mt-0.5 tracking-tighter">
-              የክልሉ ሰንደቅ
-            </span>
           </div>
         </div>
 
-        {/* Center Institution Title & Prominent 'የደረት ባጅ' under Logo */}
+        {/* Center Institution Title & Prominent 'የደረት ባጅ' under English text */}
         <div className="text-center mt-1 space-y-0.5">
           <h1 className="text-[10px] font-black leading-tight text-white tracking-tight drop-shadow-md font-sans">
             ቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን
           </h1>
-          <div className="inline-block bg-[#facc15] text-[#0b1c3a] text-[9.5px] font-black px-2 py-0.5 rounded shadow uppercase tracking-wider">
+          <p className="text-[6px] font-black text-[#fef08a] tracking-tighter uppercase leading-none">
+            BENISHANGUL GUMUZ REGION POLICE COMMISSION
+          </p>
+          <div className="inline-block bg-[#facc15] text-[#0b1c3a] text-[9px] font-black px-2 py-0.5 rounded shadow uppercase tracking-wider mt-0.5">
             የደረት ባጅ
           </div>
-          <p className="text-[6px] font-black text-[#fef08a] tracking-tighter uppercase leading-none mt-0.5">
-            CHEST BADGE • BENISHANGUL GUMUZ REGION POLICE COMMISSION
-          </p>
         </div>
       </div>
 
@@ -176,12 +170,12 @@ export const BadgeCardFront: React.FC<BadgeCardFrontProps> = ({
         {/* Right Column: Headshot Photo */}
         <div className="relative w-[108px] flex flex-col items-center">
           {/* Photo Frame Container */}
-          <div className="relative w-[104px] h-[130px] rounded-lg border-2 border-[#facc15] bg-white overflow-hidden shadow-xl">
+          <div className="relative w-[104px] h-[130px] rounded-lg border-2 border-[#facc15] bg-white overflow-hidden shadow-2xl ring-2 ring-[#facc15]/30">
             {data.headshotPhoto ? (
               <img
                 src={data.headshotPhoto}
                 alt="Personnel Headshot"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover object-top filter brightness-[1.08] contrast-[1.08] saturate-[1.12]"
               />
             ) : (
               <div className="w-full h-full bg-gray-200 flex flex-col items-center justify-center text-gray-500">
