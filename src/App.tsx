@@ -369,6 +369,7 @@ export default function App() {
             <div className="space-y-6">
               <BadgeForm
                 initialData={editingBadge}
+                existingBadges={badges}
                 onSave={handleSaveBadge}
                 onCancel={() => {
                   setEditingBadge(null);

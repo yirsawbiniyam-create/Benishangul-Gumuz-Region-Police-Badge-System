@@ -25,10 +25,44 @@ import {
   ZoomIn,
   ZoomOut,
   Move,
+  Hash,
 } from "lucide-react";
+
+// Helper function to generate auto-sequential non-repeating Badge IDs
+export function generateNextSequentialBadgeId(existingBadges: BadgeData[] = []): string {
+  const prefix = "BGRP-TEC-";
+  let maxNumber = 1000; // base starting index (first is 1001)
+
+  existingBadges.forEach((badge) => {
+    if (badge.badgeId) {
+      const matches = badge.badgeId.match(/\d+/g);
+      if (matches) {
+        const num = parseInt(matches[matches.length - 1], 10);
+        if (!isNaN(num) && num > maxNumber) {
+          maxNumber = num;
+        }
+      }
+    }
+  });
+
+  let nextNum = maxNumber + 1;
+  let candidateId = `${prefix}${nextNum}`;
+
+  // Ensure strict uniqueness in case numbers were created manually or out of order
+  const existingSet = new Set(
+    existingBadges.map((b) => b.badgeId?.toLowerCase().trim())
+  );
+  while (existingSet.has(candidateId.toLowerCase())) {
+    nextNum++;
+    candidateId = `${prefix}${nextNum}`;
+  }
+
+  return candidateId;
+}
 
 interface BadgeFormProps {
   initialData?: BadgeData | null;
+  existingBadges?: BadgeData[];
   onSave: (badge: BadgeData) => Promise<void>;
   onCancel?: () => void;
   isSubmitting?: boolean;
@@ -36,14 +70,24 @@ interface BadgeFormProps {
 
 export const BadgeForm: React.FC<BadgeFormProps> = ({
   initialData,
+  existingBadges = [],
   onSave,
   onCancel,
   isSubmitting = false,
 }) => {
   // Form State
-  const [badgeId, setBadgeId] = useState(
-    initialData?.badgeId || `BGRP-TEC-${Math.floor(1000 + Math.random() * 9000)}`
+  const [badgeId, setBadgeId] = useState<string>(() =>
+    initialData?.badgeId || generateNextSequentialBadgeId(existingBadges)
   );
+
+  // Automatically sync/generate sequential ID when creating a new badge
+  useEffect(() => {
+    if (initialData?.badgeId) {
+      setBadgeId(initialData.badgeId);
+    } else if (!badgeId) {
+      setBadgeId(generateNextSequentialBadgeId(existingBadges));
+    }
+  }, [initialData, existingBadges]);
   const [fullNameAmharic, setFullNameAmharic] = useState(
     initialData?.fullNameAmharic || ""
   );
@@ -255,16 +299,39 @@ export const BadgeForm: React.FC<BadgeFormProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Badge ID */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                የባጅ ቁጥር / Badge ID
-              </label>
-              <input
-                type="text"
-                value={badgeId}
-                onChange={(e) => setBadgeId(e.target.value)}
-                required
-                className="w-full px-3 py-2 text-sm font-mono font-bold bg-slate-800 text-slate-100 border border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              />
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-semibold text-slate-300">
+                  የባጅ ቁጥር / Badge ID
+                </label>
+                <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.5 rounded flex items-center gap-1">
+                  <Hash className="w-3 h-3 text-emerald-400" />
+                  አውቶማቲክ ተከታታይ
+                </span>
+              </div>
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={badgeId}
+                  onChange={(e) => setBadgeId(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 text-sm font-mono font-bold bg-slate-800 text-slate-100 border border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10"
+                />
+                {!initialData && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setBadgeId(generateNextSequentialBadgeId(existingBadges))
+                    }
+                    className="absolute right-1 px-2 py-1 bg-slate-700 hover:bg-slate-600 text-blue-400 rounded text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                    title="ቀጣዩን ተከታታይ ቁጥር በድጋሚ አስላ"
+                  >
+                    <RefreshCw className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1">
+                ሲስተሙ በቅደምተከተል የመደበው የማይደገም አውቶማቲክ የባጅ ቁጥር
+              </p>
             </div>
 
             {/* Status */}
