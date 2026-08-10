@@ -8,7 +8,24 @@ import {
   DEFAULT_OFFICIAL_STAMP,
   DEFAULT_OFFICIAL_SIGNATURE,
 } from "../data/defaults";
-import { Sparkles, Upload, RefreshCw, CheckCircle2, ShieldCheck, Image, Sliders, Camera } from "lucide-react";
+import {
+  Sparkles,
+  Upload,
+  RefreshCw,
+  CheckCircle2,
+  ShieldCheck,
+  Image,
+  Sliders,
+  Camera,
+  ArrowUp,
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+  RotateCcw,
+  ZoomIn,
+  ZoomOut,
+  Move,
+} from "lucide-react";
 
 interface BadgeFormProps {
   initialData?: BadgeData | null;
@@ -92,6 +109,9 @@ export const BadgeForm: React.FC<BadgeFormProps> = ({
       autoBrightnessContrast: true,
       brightness: 10,
       contrast: 15,
+      offsetX: 0,
+      offsetY: 0,
+      zoom: 1,
     });
 
   const [isProcessingPhoto, setIsProcessingPhoto] = useState(false);
@@ -671,6 +691,174 @@ export const BadgeForm: React.FC<BadgeFormProps> = ({
                   }
                   className="w-full accent-blue-500"
                 />
+              </div>
+            </div>
+
+            {/* Photo Position & Zoom Nudge Controls (ወደ ላይ፣ ወደ ታች፣ ወደ ግራ፣ ወደ ቀኝ እና መመላሻ) */}
+            <div className="pt-3 border-t border-slate-700 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-200 flex items-center gap-1.5 uppercase">
+                  <Move className="w-4 h-4 text-amber-400" />
+                  የፎቶው አቀማመጥ ማስተካከያ (Position & Zoom)
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setEnhancementOptions({
+                      ...enhancementOptions,
+                      offsetX: 0,
+                      offsetY: 0,
+                      zoom: 1,
+                      brightness: 10,
+                      contrast: 15,
+                    })
+                  }
+                  className="px-2.5 py-1 text-[11px] font-bold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 rounded-md transition flex items-center gap-1 cursor-pointer"
+                  title="ወደ ነበረበት መልስ / Reset Position"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  መመላሻ / Reset
+                </button>
+              </div>
+
+              {/* D-Pad Arrow Buttons */}
+              <div className="flex flex-col sm:flex-row items-center gap-4 bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                {/* Arrow Pad */}
+                <div className="flex flex-col items-center gap-1 shrink-0">
+                  {/* Up */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setEnhancementOptions((prev) => ({
+                        ...prev,
+                        offsetY: prev.offsetY - 10,
+                      }))
+                    }
+                    className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 transition shadow cursor-pointer active:scale-95"
+                    title="ወደ ላይ / Up"
+                  >
+                    <ArrowUp className="w-4 h-4 text-blue-400" />
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    {/* Left */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setEnhancementOptions((prev) => ({
+                          ...prev,
+                          offsetX: prev.offsetX - 10,
+                        }))
+                      }
+                      className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 transition shadow cursor-pointer active:scale-95"
+                      title="ወደ ግራ / Left"
+                    >
+                      <ArrowLeft className="w-4 h-4 text-blue-400" />
+                    </button>
+
+                    {/* Offset values display */}
+                    <span className="text-[10px] font-bold text-slate-400 px-1 font-mono">
+                      {enhancementOptions.offsetX},{enhancementOptions.offsetY}
+                    </span>
+
+                    {/* Right */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setEnhancementOptions((prev) => ({
+                          ...prev,
+                          offsetX: prev.offsetX + 10,
+                        }))
+                      }
+                      className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 transition shadow cursor-pointer active:scale-95"
+                      title="ወደ ቀኝ / Right"
+                    >
+                      <ArrowRight className="w-4 h-4 text-blue-400" />
+                    </button>
+                  </div>
+
+                  {/* Down */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setEnhancementOptions((prev) => ({
+                        ...prev,
+                        offsetY: prev.offsetY + 10,
+                      }))
+                    }
+                    className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 transition shadow cursor-pointer active:scale-95"
+                    title="ወደ ታች / Down"
+                  >
+                    <ArrowDown className="w-4 h-4 text-blue-400" />
+                  </button>
+                </div>
+
+                {/* Direct Control Sliders for Position X, Y and Zoom */}
+                <div className="flex-1 w-full space-y-2 text-xs">
+                  {/* Position X */}
+                  <div>
+                    <div className="flex justify-between font-bold text-slate-300 mb-0.5">
+                      <span>ወደ ግራ / ወደ ቀኝ (Left / Right):</span>
+                      <span className="font-mono text-blue-400">{enhancementOptions.offsetX}px</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="-150"
+                      max="150"
+                      value={enhancementOptions.offsetX}
+                      onChange={(e) =>
+                        setEnhancementOptions({
+                          ...enhancementOptions,
+                          offsetX: parseInt(e.target.value),
+                        })
+                      }
+                      className="w-full accent-blue-500"
+                    />
+                  </div>
+
+                  {/* Position Y */}
+                  <div>
+                    <div className="flex justify-between font-bold text-slate-300 mb-0.5">
+                      <span>ወደ ላይ / ወደ ታች (Up / Down):</span>
+                      <span className="font-mono text-blue-400">{enhancementOptions.offsetY}px</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="-150"
+                      max="150"
+                      value={enhancementOptions.offsetY}
+                      onChange={(e) =>
+                        setEnhancementOptions({
+                          ...enhancementOptions,
+                          offsetY: parseInt(e.target.value),
+                        })
+                      }
+                      className="w-full accent-blue-500"
+                    />
+                  </div>
+
+                  {/* Zoom */}
+                  <div>
+                    <div className="flex justify-between font-bold text-slate-300 mb-0.5">
+                      <span>የፎቶ መጠን / ማጉያ (Zoom):</span>
+                      <span className="font-mono text-blue-400">{Math.round((enhancementOptions.zoom || 1) * 100)}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0.5"
+                      max="2.5"
+                      step="0.05"
+                      value={enhancementOptions.zoom || 1}
+                      onChange={(e) =>
+                        setEnhancementOptions({
+                          ...enhancementOptions,
+                          zoom: parseFloat(e.target.value),
+                        })
+                      }
+                      className="w-full accent-blue-500"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -35,4 +35,7 @@ export interface PhotoEnhancementOptions {
   autoBrightnessContrast: boolean;
   brightness: number; // -100 to 100
   contrast: number; // -100 to 100
+  offsetX: number; // -200 to 200 (ወደ ግራ / ወደ ቀኝ)
+  offsetY: number; // -200 to 200 (ወደ ላይ / ወደ ታች)
+  zoom: number; // 0.5 to 3.0 (ማጉያ)
 }

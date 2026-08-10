@@ -27,12 +27,21 @@ export async function processHeadshotPhoto(
         return;
       }
 
-      // Draw original image scaled to fit canvas centered
+      // Draw original image scaled to fit canvas centered with zoom and offset panning
       const hRatio = targetWidth / img.width;
       const vRatio = targetHeight / img.height;
-      const ratio = Math.max(hRatio, vRatio);
-      const centerShiftX = (targetWidth - img.width * ratio) / 2;
-      const centerShiftY = (targetHeight - img.height * ratio) / 2;
+      const baseRatio = Math.max(hRatio, vRatio);
+      const zoom = options.zoom ?? 1;
+      const ratio = baseRatio * zoom;
+
+      const drawWidth = img.width * ratio;
+      const drawHeight = img.height * ratio;
+
+      const offsetX = options.offsetX ?? 0;
+      const offsetY = options.offsetY ?? 0;
+
+      const centerShiftX = (targetWidth - drawWidth) / 2 + offsetX;
+      const centerShiftY = (targetHeight - drawHeight) / 2 + offsetY;
 
       // Fill background white first
       ctx.fillStyle = "#FFFFFF";
@@ -47,8 +56,8 @@ export async function processHeadshotPhoto(
         img.height,
         centerShiftX,
         centerShiftY,
-        img.width * ratio,
-        img.height * ratio
+        drawWidth,
+        drawHeight
       );
 
       // Get pixel data for canvas processing
