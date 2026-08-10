@@ -37,53 +37,51 @@ export const BadgeCardBack: React.FC<BadgeCardBackProps> = ({
         transform: `scale(${scale})`,
         transformOrigin: "top left",
       }}
-      className={`relative w-[340px] h-[536px] rounded-2xl overflow-hidden shadow-2xl border-4 border-[#d4af37] bg-gradient-to-b from-[#0a192f] via-[#0d2137] to-[#081220] text-white flex flex-col justify-between p-3 select-none print:shadow-none ${className}`}
+      className={`relative w-[315px] h-[495px] rounded-2xl overflow-hidden shadow-2xl border-4 border-[#eab308] bg-gradient-to-b from-[#0f2d5e] via-[#163a75] to-[#0b1b3b] text-white flex flex-col justify-between p-2.5 select-none print:shadow-none ${className}`}
     >
       {/* 1. Large Enlarged Watermark of Police Commission Logo in Background */}
-      {/* "ከዛ ከባጁ በስተጀርባ ላይ በትልቁ ማለትም ሙሉዉን የኮሚሽኑን ሎጎ የተወሰነ ደመቅ አድረገህ ዋተር ማርክ ታደርጋለህ" */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <img
           src={logo}
           alt="Watermark Logo"
-          className="w-[280px] h-[280px] object-contain opacity-25 filter brightness-125 contrast-125 scale-125"
+          className="w-[260px] h-[260px] object-contain opacity-25 filter brightness-125 contrast-125 scale-125"
         />
       </div>
 
-      {/* Security Guilloche Micro Pattern Background */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:10px_10px]" />
+      {/* Security Pattern Background */}
+      <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#facc15_1px,transparent_1px)] [background-size:10px_10px]" />
 
       {/* Top Header Label */}
-      <div className="relative text-center pb-2 border-b-2 border-[#d4af37]/60">
-        <h2 className="text-[10px] font-black text-[#d4af37] tracking-widest uppercase font-sans">
-          የቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን
+      <div className="relative text-center pb-1.5 border-b-2 border-[#eab308]">
+        <h2 className="text-[10px] font-black text-[#facc15] tracking-widest uppercase font-sans drop-shadow-md">
+          ቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን
         </h2>
-        <p className="text-[8px] font-bold text-gray-200 tracking-wider uppercase mt-0.5">
-          OFFICIAL SECURITY VERIFICATION BACK SIDE
-        </p>
+        <div className="inline-block bg-[#facc15] text-[#0b1c3a] text-[8px] font-black px-2 py-0.2 rounded shadow uppercase mt-0.5">
+          የደረት ባጅ ማረጋገጫ (CHEST BADGE VERIFICATION)
+        </div>
       </div>
 
       {/* Middle Section: High Visibility QR Code for Authenticity Scan */}
-      {/* "ከዛ በስተጀርባዉ ላይ በደማቁ ስካን ማድረጊያና እና ስለባጁ ትክክለኛነት የሚያረጋግጥ ኪዉ አር ስካነር ታደርጋለህ ከዛ ስካን ሲደረግ ስለባጁ ትክክለኛነትና ሙሉ ባጁ ከነፎቶዉ እንዲያመጣ ታደርጋለህ" */}
-      <div className="relative my-2 flex flex-col items-center justify-center bg-black/40 backdrop-blur-md rounded-xl p-3 border border-[#d4af37]/50 shadow-inner">
-        <div className="p-2 bg-white rounded-xl shadow-2xl border-2 border-[#d4af37] transition-transform hover:scale-105">
+      <div className="relative my-1.5 flex flex-col items-center justify-center bg-[#0b1c3a]/80 backdrop-blur-md rounded-xl p-2.5 border border-[#facc15]/60 shadow-lg">
+        <div className="p-1.5 bg-white rounded-xl shadow-2xl border-2 border-[#eab308] transition-transform hover:scale-105">
           <QRCodeSVG
             value={qrVerificationPayload}
-            size={120}
+            size={110}
             level="H"
             includeMargin={false}
             imageSettings={{
               src: logo,
               x: undefined,
               y: undefined,
-              height: 24,
-              width: 24,
+              height: 22,
+              width: 22,
               excavate: true,
             }}
           />
         </div>
 
-        <div className="mt-2 text-center">
-          <div className="inline-flex items-center gap-1 bg-[#d4af37] text-[#0a192f] text-[8.5px] font-black px-2 py-0.5 rounded shadow uppercase">
+        <div className="mt-1.5 text-center">
+          <div className="inline-flex items-center gap-1 bg-[#facc15] text-[#0b1c3a] text-[8px] font-black px-2 py-0.5 rounded shadow uppercase">
             <svg
               className="w-3 h-3"
               fill="none"
@@ -99,51 +97,50 @@ export const BadgeCardBack: React.FC<BadgeCardBackProps> = ({
             </svg>
             ስካን አድርገው ያረጋግጡ / SCAN TO VERIFY
           </div>
-          <p className="text-[7.5px] font-semibold text-gray-300 mt-1 max-w-[240px] leading-tight">
+          <p className="text-[7px] font-bold text-gray-100 mt-1 max-w-[230px] leading-tight">
             ይህንን QR ስካን በማድረግ የባለባጁን ሙሉ መረጃ፣ ጉርድ ፎቶ እና የባጁን ኦፊሴላዊነት ማረጋገጥ ይቻላል::
           </p>
         </div>
       </div>
 
       {/* Official Property Terms & Legal Notice */}
-      <div className="relative text-[7.5px] text-gray-200 bg-[#071322]/80 p-2 rounded-lg border border-gray-700 leading-tight text-center space-y-1">
-        <p className="font-semibold font-sans text-amber-200">
-          • ይህ ባጅ የቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን የቴክኖሎጂ ማስፋፊያ ማዕከል ንብረት ነው::
+      <div className="relative text-[7px] text-gray-100 bg-[#0b1c3a]/90 p-2 rounded-lg border border-amber-400/40 leading-tight text-center space-y-1 shadow-sm">
+        <p className="font-bold font-sans text-amber-200">
+          • ይህ ባጅ የቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን ንብረት ነው::
         </p>
-        <p className="text-gray-300">
+        <p className="text-gray-200 font-semibold">
           • ባጁ ቢጠፋ ወይም ሌላ ሰው ቢያገኘው በአቅራቢያው ለሚገኝ ፖሊስ ጣቢያ እንዲያስረክብ ወይም በስልክ ቁጥር
-          <strong className="text-[#d4af37] font-mono ml-0.5">+251 57 775 0000</strong> ይደውሉ::
+          <strong className="text-[#facc15] font-mono ml-0.5 font-black">+251 57 775 0000</strong> ይደውሉ::
         </p>
-        <p className="text-[6.5px] text-gray-400 uppercase font-mono tracking-tighter pt-0.5 border-t border-gray-800">
-          PROPERTY OF BENISHANGUL GUMUZ REGION POLICE COMMISSION. IF FOUND PLEASE RETURN TO THE NEAREST POLICE STATION.
+        <p className="text-[6px] text-amber-300 font-bold uppercase font-mono tracking-tighter pt-0.5 border-t border-amber-400/20">
+          PROPERTY OF BENISHANGUL GUMUZ REGION POLICE COMMISSION.
         </p>
       </div>
 
-      {/* Authorized Signature Section (የኃላፊ ፊርማ) */}
-      {/* "ከባጁ በስተጀርባ ላይ የኋላፊ ፊርማ ታስገባለህ የሀላፊዉ ፊርማ የሚገባትን ጋለሪ ገብቶ እንዲወስድ ታደርጋለህ" */}
-      <div className="relative pt-1 border-t-2 border-[#d4af37]/60 flex items-end justify-between">
+      {/* Authorized Signature Section */}
+      <div className="relative pt-1 border-t-2 border-[#eab308] flex items-end justify-between">
         <div className="flex flex-col text-left">
-          <span className="text-[7px] font-bold text-gray-400 uppercase">
+          <span className="text-[6.5px] font-black text-amber-300 uppercase">
             የፍቃድ ቁጥር / AUTH SERIAL:
           </span>
-          <span className="text-[9px] font-black text-[#d4af37] font-mono">
+          <span className="text-[8.5px] font-black text-white font-mono">
             {data.badgeId ? `AUTH-${data.badgeId}` : "AUTH-0000"}
           </span>
-          <span className="text-[6.5px] text-emerald-400 font-extrabold flex items-center gap-0.5 mt-0.5">
-            ● FIRESTORE SECURED DB
+          <span className="text-[6px] text-emerald-300 font-black flex items-center gap-0.5 mt-0.5">
+            ● SECURED FIRESTORE DB
           </span>
         </div>
 
         <div className="flex flex-col items-center">
           {/* Commissioner Signature Graphic */}
-          <div className="w-28 h-9 border-b border-[#d4af37] flex items-center justify-center p-0.5 bg-white/5 rounded">
+          <div className="w-26 h-8 border-b-2 border-[#facc15] flex items-center justify-center p-0.5 bg-white/10 rounded">
             <img
               src={signature}
               alt="Official Signature"
               className="max-w-full max-h-full object-contain filter invert contrast-200 brightness-200"
             />
           </div>
-          <span className="text-[7px] font-black text-[#d4af37] uppercase mt-0.5">
+          <span className="text-[6.5px] font-black text-[#facc15] uppercase mt-0.5">
             የኃላፊው ፊርማ / COMMISSIONER SIGNATURE
           </span>
         </div>
