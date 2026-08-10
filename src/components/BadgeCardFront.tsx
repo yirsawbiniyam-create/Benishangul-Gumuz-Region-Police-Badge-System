@@ -170,7 +170,7 @@ export const BadgeCardFront: React.FC<BadgeCardFrontProps> = ({
           </div>
         </div>
 
-        {/* Right Column: Headshot Photo with Overlapping Official Circular Stamp */}
+        {/* Right Column: Headshot Photo */}
         <div className="relative w-[118px] flex flex-col items-center">
           {/* Photo Frame Container */}
           <div className="relative w-[112px] h-[142px] rounded-lg border-2 border-[#d4af37] bg-white overflow-hidden shadow-xl">
@@ -205,16 +205,6 @@ export const BadgeCardFront: React.FC<BadgeCardFrontProps> = ({
             <div className="absolute top-1 right-1 bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 text-[6px] font-black text-gray-900 px-1 py-0.2 rounded shadow opacity-90 uppercase">
               HOLOGRAM
             </div>
-          </div>
-
-          {/* Official Round Stamp / Seal OVERLAPPING the Lower Shoulder Level of Photo */}
-          {/* As requested: "ክብ ማህተሙ ከባለባጁ ጉርድ ፎቶዉ ላይ ከትክሻዉ በታች ትንሽ ወረድ አድረገህ ፎቶዉ ላይ እንዲለጠፍ ታደርጋለህ" */}
-          <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-20 h-20 pointer-events-none drop-shadow-md z-10 opacity-95 hover:scale-105 transition-transform">
-            <img
-              src={stamp}
-              alt="Official Police Seal"
-              className="w-full h-full object-contain rotate-[-12deg]"
-            />
           </div>
         </div>
       </div>

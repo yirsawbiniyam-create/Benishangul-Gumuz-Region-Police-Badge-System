@@ -63,23 +63,23 @@ export const PrintSheetModal: React.FC<PrintSheetModalProps> = ({
           </div>
 
           {/* Cards Container Side-by-Side */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 print:flex-row print:gap-12 print:justify-start">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 print:flex-row print:gap-8 print:justify-center print:w-full print:m-0">
             {/* Front Card */}
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-2 print-card-container">
               <span className="text-xs font-bold text-gray-400 print:hidden">
                 የፊት ገፅ (Front Side)
               </span>
-              <div className="p-1 bg-white/5 rounded-2xl print:p-0">
+              <div className="p-1 bg-white/5 rounded-2xl print:p-0 print:m-0">
                 <BadgeCardFront data={badge} scale={1} />
               </div>
             </div>
 
             {/* Back Card */}
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-2 print-card-container">
               <span className="text-xs font-bold text-gray-400 print:hidden">
                 የኋላ ገፅ (Back Side)
               </span>
-              <div className="p-1 bg-white/5 rounded-2xl print:p-0">
+              <div className="p-1 bg-white/5 rounded-2xl print:p-0 print:m-0">
                 <BadgeCardBack data={badge} scale={1} />
               </div>
             </div>
