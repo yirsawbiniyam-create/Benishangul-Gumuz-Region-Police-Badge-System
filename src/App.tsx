@@ -21,6 +21,7 @@ import { BadgeCardBack } from "./components/BadgeCardBack";
 import { BadgeForm } from "./components/BadgeForm";
 import { BadgeDirectory } from "./components/BadgeDirectory";
 import { BadgeVerifierView } from "./components/BadgeVerifierView";
+import { PublicVerificationPage } from "./components/PublicVerificationPage";
 import { QRScannerModal } from "./components/QRScannerModal";
 import { PrintSheetModal } from "./components/PrintSheetModal";
 import {
@@ -51,6 +52,13 @@ export default function App() {
     text: string;
     type: "success" | "error";
   } | null>(null);
+  const [publicVerifyId, setPublicVerifyId] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("verify") || null;
+    }
+    return null;
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Show Toast Helper
@@ -233,6 +241,16 @@ export default function App() {
       );
     }
   };
+
+  // Standalone Public Verification Mode (when scanned via mobile phone or URL param)
+  if (publicVerifyId) {
+    return (
+      <PublicVerificationPage
+        initialBadgeId={publicVerifyId}
+        allBadges={badges}
+      />
+    );
+  }
 
   return (
     <div className="bg-[#0f172a] text-slate-100 min-h-screen font-sans selection:bg-blue-600 selection:text-white flex flex-col justify-between">

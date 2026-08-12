@@ -14,6 +14,7 @@ import {
   Building,
   Award,
   Lock,
+  ExternalLink,
 } from "lucide-react";
 
 interface BadgeVerifierViewProps {
@@ -121,12 +122,17 @@ export const BadgeVerifierView: React.FC<BadgeVerifierViewProps> = ({
                 ይህ ባጅ በቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን ቴክኖሎጂ ማስፋፊያ ማዕከል የተመዘገበና በፋየርስቶር የተረጋገጠ ነው::
               </p>
             </div>
-            <div className="text-right hidden sm:block">
-              <span className="text-[10px] uppercase text-slate-400 block font-mono">
-                FIRESTORE SYNC
-              </span>
-              <span className="text-xs font-mono font-bold text-blue-400">
-                {new Date().toLocaleTimeString()}
+            <div className="text-right flex flex-col items-end gap-1.5 shrink-0">
+              <button
+                onClick={() => window.open(`/?verify=${encodeURIComponent(badge.badgeId)}`, "_blank")}
+                className="px-3 py-1.5 bg-[#facc15] hover:bg-[#eab308] text-[#0b1c3a] font-black text-[11px] rounded-lg shadow transition flex items-center gap-1 cursor-pointer"
+                title="ይህንን ባጅ በስልክ ስካን ሲደረግ የሚታየውን ኦፊሴላዊ የQR ገፅ ይክፈቱ"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                የQR ገፅን ክፈት
+              </button>
+              <span className="text-[10px] font-mono text-slate-400">
+                FIRESTORE SYNC: {new Date().toLocaleTimeString()}
               </span>
             </div>
           </div>
