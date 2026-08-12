@@ -1,14 +1,10 @@
+// Public Verification Page for Police Badge QR Scanning
 import React, { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { BadgeData } from "../types";
 import { BadgeCardFront } from "./BadgeCardFront";
 import { BadgeCardBack } from "./BadgeCardBack";
-import {
-  DEFAULT_ETHIOPIA_FLAG,
-  DEFAULT_REGION_FLAG,
-  DEFAULT_COMMISSION_LOGO,
-} from "../data/defaults";
 import {
   ShieldCheck,
   ShieldAlert,
@@ -121,47 +117,20 @@ export const PublicVerificationPage: React.FC<PublicVerificationPageProps> = ({
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-blue-600 selection:text-white flex flex-col justify-between">
-      {/* Public Header - No Dashboard Nav Links */}
-      <header className="bg-gradient-to-r from-[#0b1c3a] via-[#163a75] to-[#0b1c3a] border-b-2 border-[#eab308] py-4 px-4 shadow-2xl sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
-          {/* Ethiopia Flag */}
-          <div className="w-10 h-6.5 rounded border border-[#facc15] overflow-hidden shadow-md shrink-0 bg-black">
-            <img
-              src={DEFAULT_ETHIOPIA_FLAG}
-              alt="Ethiopian Flag"
-              className="w-full h-full object-cover"
-            />
+      {/* Public Header - Title banner without top header flags/logo */}
+      <header className="bg-gradient-to-r from-[#0b1c3a] via-[#163a75] to-[#0b1c3a] border-b-2 border-[#eab308] py-3.5 px-4 shadow-2xl sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto flex flex-col items-center justify-center text-center">
+          <div className="flex items-center justify-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-[#facc15]" />
+            <h1 className="text-xs sm:text-sm font-black text-white leading-tight font-sans tracking-tight">
+              ቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን
+            </h1>
           </div>
-
-          {/* Commission Logo & Titles */}
-          <div className="flex items-center gap-3 text-center">
-            <div className="w-12 h-12 p-0.5 rounded-full bg-gradient-to-tr from-[#facc15] via-white to-[#eab308] shadow-xl shrink-0">
-              <img
-                src={DEFAULT_COMMISSION_LOGO}
-                alt="Police Logo"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div>
-              <h1 className="text-xs sm:text-sm font-black text-white leading-tight font-sans tracking-tight">
-                ቤንሻንጉል ጉሙዝ ክልል ፖሊስ ኮሚሽን
-              </h1>
-              <p className="text-[9px] sm:text-[10px] font-extrabold text-[#fef08a] uppercase tracking-wider leading-none mt-0.5">
-                BENISHANGUL GUMUZ REGION POLICE COMMISSION
-              </p>
-              <div className="inline-block bg-[#facc15] text-[#0b1c3a] text-[9px] font-black px-2 py-0.5 rounded shadow uppercase tracking-wider mt-1">
-                ኦፊሴላዊ የባጅ ማረጋገጫ ፖርታል
-              </div>
-            </div>
-          </div>
-
-          {/* Regional Flag */}
-          <div className="w-10 h-6.5 rounded border border-[#facc15] overflow-hidden shadow-md shrink-0 bg-black">
-            <img
-              src={DEFAULT_REGION_FLAG}
-              alt="Regional Flag"
-              className="w-full h-full object-cover"
-            />
+          <p className="text-[9px] sm:text-[10px] font-extrabold text-[#fef08a] uppercase tracking-wider leading-none mt-1">
+            BENISHANGUL GUMUZ REGION POLICE COMMISSION
+          </p>
+          <div className="inline-block bg-[#facc15] text-[#0b1c3a] text-[9px] font-black px-2.5 py-0.5 rounded shadow uppercase tracking-wider mt-1.5">
+            ኦፊሴላዊ የባጅ ማረጋገጫ ፖርታል
           </div>
         </div>
       </header>
