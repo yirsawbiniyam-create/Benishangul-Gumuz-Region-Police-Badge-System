@@ -178,11 +178,25 @@ export default function App() {
     }
   }, [badges]);
 
-  // 3. Save or Update Badge in Firestore with local fallback
+  // 3. Save or Update Badge in Firestore with optimistic local update
   const handleSaveBadge = async (badgeData: BadgeData) => {
     setIsSubmitting(true);
     const docId = badgeData.id || badgeData.badgeId;
     const badgeToSave = { ...badgeData, id: docId };
+
+    // Update local state immediately so it appears instantly on dashboard
+    setBadges((prev) => {
+      const filtered = prev.filter(
+        (b) => b.badgeId !== badgeToSave.badgeId && b.id !== docId
+      );
+      const updated = [badgeToSave, ...filtered];
+      try {
+        localStorage.setItem("bgr_police_badges", JSON.stringify(updated));
+      } catch (e) {
+        // ignore
+      }
+      return updated;
+    });
 
     try {
       const docRef = doc(db, "badges", docId);
@@ -192,11 +206,7 @@ export default function App() {
         "success"
       );
     } catch (err: any) {
-      console.warn("Firestore save fallback to local state:", err);
-      setBadges((prev) => {
-        const filtered = prev.filter((b) => b.badgeId !== badgeToSave.badgeId && b.id !== docId);
-        return [badgeToSave, ...filtered];
-      });
+      console.warn("Firestore save fallback note:", err);
       showToast(
         `የባጅ መረጃ (${badgeData.fullNameAmharic}) በተሳካ ሁኔታ ተመዝግቧል!`,
         "success"

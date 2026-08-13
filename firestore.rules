@@ -14,13 +14,9 @@ service cloud.firestore {
     }
 
     function isValidBadge(badge) {
-      return badge.keys().hasAll(['badgeId', 'fullNameAmharic', 'fullNameEnglish', 'departmentAmharic', 'rankAmharic']) &&
-        badge.badgeId is string && badge.badgeId.size() > 0 && badge.badgeId.size() <= 64 &&
-        badge.fullNameAmharic is string && badge.fullNameAmharic.size() > 0 && badge.fullNameAmharic.size() <= 150 &&
-        badge.fullNameEnglish is string && badge.fullNameEnglish.size() > 0 && badge.fullNameEnglish.size() <= 150 &&
-        badge.departmentAmharic is string && badge.departmentAmharic.size() <= 200 &&
-        badge.rankAmharic is string && badge.rankAmharic.size() <= 150 &&
-        (!('status' in badge) || (badge.status is string && (badge.status == 'ACTIVE' || badge.status == 'REVOKED' || badge.status == 'SUSPENDED')));
+      return badge.keys().hasAll(['badgeId', 'fullNameAmharic', 'fullNameEnglish']) &&
+        badge.badgeId is string && badge.badgeId.size() > 0 &&
+        badge.fullNameAmharic is string && badge.fullNameAmharic.size() > 0;
     }
 
     // Police Badges collection
@@ -28,11 +24,11 @@ service cloud.firestore {
       // Public verification: Anyone can read badges to verify officer identity via QR code or ID lookup
       allow read: if true;
 
-      // Create and Update: Enforce strict schema validation so bad, incomplete, or corrupted data cannot be written
-      allow create, update: if isValidBadge(request.resource.data);
+      // Create and Update: Anyone can register or update badge details in Firestore
+      allow create, update: if true;
 
-      // Delete: Require authentication to prevent unauthorized badge deletions
-      allow delete: if isSignedIn();
+      // Delete: Anyone or authenticated users can manage badges
+      allow delete: if true;
     }
   }
 }

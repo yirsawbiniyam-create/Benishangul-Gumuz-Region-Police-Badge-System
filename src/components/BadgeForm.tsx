@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BadgeData, PhotoEnhancementOptions } from "../types";
-import { processHeadshotPhoto } from "../utils/imageProcessing";
+import { processHeadshotPhoto, compressPhotoForStorage } from "../utils/imageProcessing";
 import {
   DEFAULT_ETHIOPIA_FLAG,
   DEFAULT_REGION_FLAG,
@@ -214,6 +214,11 @@ export const BadgeForm: React.FC<BadgeFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const rawPhotoCompressed = rawHeadshotPhoto
+      ? await compressPhotoForStorage(rawHeadshotPhoto, 320, 400, 0.8)
+      : "";
+    const finalHeadshot = processedHeadshot || rawPhotoCompressed;
+
     const badgePayload: BadgeData = {
       ...(initialData?.id ? { id: initialData.id } : {}),
       badgeId,
@@ -224,8 +229,8 @@ export const BadgeForm: React.FC<BadgeFormProps> = ({
       rankAmharic,
       rankEnglish,
       phoneNumber,
-      headshotPhoto: processedHeadshot || rawHeadshotPhoto,
-      rawHeadshotPhoto,
+      headshotPhoto: finalHeadshot,
+      rawHeadshotPhoto: rawPhotoCompressed,
       ethiopiaFlag,
       regionFlag,
       commissionLogo,

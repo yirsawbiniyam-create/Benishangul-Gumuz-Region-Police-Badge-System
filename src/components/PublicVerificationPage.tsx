@@ -100,7 +100,27 @@ export const PublicVerificationPage: React.FC<PublicVerificationPageProps> = ({
         setNotFound(true);
       }
     } catch (err) {
-      console.warn("Firestore fetch error on public verification:", err);
+      console.warn("Firestore offline/fetch note on public verification:", err);
+      // Fallback search locally stored badges if offline
+      const localSaved = localStorage.getItem("bgr_police_badges");
+      if (localSaved) {
+        try {
+          const list: BadgeData[] = JSON.parse(localSaved);
+          const localMatch = list.find(
+            (b) =>
+              b.badgeId.toLowerCase() === cleanId.toLowerCase() ||
+              b.id.toLowerCase() === cleanId.toLowerCase()
+          );
+          if (localMatch) {
+            setBadge(localMatch);
+            setNotFound(false);
+            setLoading(false);
+            return;
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
       setBadge(null);
       setNotFound(true);
     } finally {

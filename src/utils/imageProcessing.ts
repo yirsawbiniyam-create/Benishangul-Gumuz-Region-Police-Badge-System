@@ -1,6 +1,55 @@
 import { PhotoEnhancementOptions } from "../types";
 
 /**
+ * Compress and downscale raw uploaded photo to lightweight JPEG to avoid Firestore 1MB document size limits
+ */
+export async function compressPhotoForStorage(
+  imageSrc: string,
+  maxWidth = 350,
+  maxHeight = 450,
+  quality = 0.8
+): Promise<string> {
+  if (!imageSrc || !imageSrc.startsWith("data:image")) return imageSrc;
+
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxWidth || height > maxHeight) {
+        const ratio = Math.min(maxWidth / width, maxHeight / height);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        resolve(imageSrc);
+        return;
+      }
+
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+
+      resolve(canvas.toDataURL("image/jpeg", quality));
+    };
+
+    img.onerror = () => {
+      resolve(imageSrc);
+    };
+
+    img.src = imageSrc;
+  });
+}
+
+/**
  * Process a headshot photo on HTML5 Canvas according to user parameters:
  * - Clean white background
  * - Glare reduction & specular highlight smoothing
@@ -10,14 +59,14 @@ export async function processHeadshotPhoto(
   imageSrc: string,
   options: PhotoEnhancementOptions
 ): Promise<string> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.onload = () => {
       const canvas = document.createElement("canvas");
       // Standard passport photo dimension ratio (~300 x 380)
-      const targetWidth = 400;
-      const targetHeight = 500;
+      const targetWidth = 320;
+      const targetHeight = 400;
       canvas.width = targetWidth;
       canvas.height = targetHeight;
 
@@ -107,7 +156,7 @@ export async function processHeadshotPhoto(
           const x = pixelIdx % targetWidth;
           const y = Math.floor(pixelIdx / targetWidth);
           const isOuterBorder =
-            x < 35 || x > targetWidth - 35 || y < 35 || y > targetHeight - 35;
+            x < 30 || x > targetWidth - 30 || y < 30 || y > targetHeight - 30;
 
           if (isOuterBorder && (isNearWhiteOrLightBg || isChromaBg || isFlatDarkBg)) {
             r = 255;
@@ -147,8 +196,8 @@ export async function processHeadshotPhoto(
 
       ctx.putImageData(imageData, 0, 0);
 
-      // Return processed canvas image URL
-      resolve(canvas.toDataURL("image/jpeg", 0.92));
+      // Return processed canvas image URL (JPEG quality 0.82 for compact size)
+      resolve(canvas.toDataURL("image/jpeg", 0.82));
     };
 
     img.onerror = (err) => {
