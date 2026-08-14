@@ -22,8 +22,9 @@
     }
 
     @page {
-      size: auto;
-      margin: 10mm;
+      size: landscape;
+      margin: 8mm;
     }
   }
 }
+
